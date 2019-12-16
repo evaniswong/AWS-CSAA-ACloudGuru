@@ -15,7 +15,7 @@ This section will cover a top-level overview on the AWS services tested in the S
 * EC2 container service - Run and manage Docker containers at scale
 * Elastic Beanstalk - For developers who do not understand AWS who just want to upload their code
 * Lambda - A code uploaded to the cloud where you can control when it executes (no need to worry about physical or virtual machine)
-* Lightsail - Amazon's VPN (virtual private network) service essentially a watered-down version of EC2
+* Lightsail - Amazon's VPS (virtual private Server) service essentially a watered-down version of EC2
 * Batch - Used for batch computing in the cloud
 
 ### Storage Service
