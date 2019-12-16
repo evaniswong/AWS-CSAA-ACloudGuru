@@ -15,7 +15,7 @@ This section will cover an in-depth overview on the IAM service.
 ### Critical Terms
 * Users - End Users
 * Groups - A collection of users under one set of permissions
-* Roles - You create roles and can then assign them to AWS resources
+* Roles - You create roles and can then assign them to AWS resources, let EC2 access S3 on behalf of you.
 * Policies - A document that defines one (or more permissions)
 
 ### IAM - Lab
