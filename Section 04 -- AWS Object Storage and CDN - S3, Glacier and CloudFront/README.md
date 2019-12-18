@@ -8,7 +8,7 @@ This section will cover an in-depth overview on the S3 (Simple Storage Service) 
 * S3 is an object-based storage
 * The data is spread across multiple devices and facilities
 
-### S3 - The Basics
+### S3 - The Basics 
 * S3 is Object-based - i.e. allows you to upload files
 * Files can be from 0 Bytes to 5 TB
 * There is unlimited storage
@@ -16,12 +16,14 @@ This section will cover an in-depth overview on the S3 (Simple Storage Service) 
 * S3 is a universal namespace - names must be unique globally
 * URLs look like https://s3-eu-west-1.amazonaws.com/<name>
 * When you upload a file to S3 you will receive a HTTP 200 code if the upload was successful
+* Not suitable to install an operating system on.
+* You can turn on MFA Delete
 
-### Data Consistency Model for S3
+### Data Consistency Model for S3 
 * Read after Write consistency for PUTS of new Objects
 * Eventual Consistency for overwrite PUTS and DELETES (can take some time to propagate)
 
-### S3 is a Simple Key-value Store
+### S3 is a Simple Key-value Store 
 Objects consist of the following:
  * Key (this is the name of the object)
  * Value (this is the data and is made up of a sequence of bytes)
@@ -45,7 +47,11 @@ Objects consist of the following:
 * S3 Standard: 99.99% availability, 99.999999999% durability, stored redundantly across multiple devices in multiple facilities, and is designed to sustain the loss of 2 facilities concurrently
 * S3 - IA: (Infrequently Accessed): For data that is accessed less frequently, but requires rapid access when needed. Lower fee than S3 but you are charged a retrieval fee
 * S3 One Zone - IA: Want a lower-cost option for infrequently accessed data but do not require the multiple AZ data resilience
-* Glacier: Very cheap but used for archival only. Expedited, Standard or Bulk. A standard retrieval time takes 3-5 hours
+* S3 Intelligent Tiering
+Designed to optimize costs by automatically moving data to the most cost-effective access tier, without performance impact or operational overhead.
+* S3 Glacier: Very cheap but used for archival only. Expedited, Standard or Bulk. A standard retrieval time from minutes to hours.
+* S3 Glacier Deep Archive: amazon lowest storge class, retrival time 12 hours.
+
 
 <div align="center">
   <img src="s3-storage-tiers.jpg">
@@ -59,22 +65,28 @@ In S3, we are charged for:
 * Storage Management Pricing
 * Data Transfer Pricing
 * Transfer Acceleration
+* Cross Region Replication Pricing
 
-### What is S3 Transfer Acceleration?
-AWS S3 Transfer Acceleration enables fast, easy, and secure transfers of files over long distances between your end users and an S3 bucket. Transfer Acceleration takes advantage of AWS CloudFront's globally distributed edge locations. As the data arrives at an edge location, data is routed to AWS S3 over an optimized network path.
 
 ### Create and S3 Bucket - Exam Tips
 * Buckets are a universal name space
 * Upload an object to S3 receives a HTTP 200 code on success
-* S3, S3-IA, S3 Reduced Redundancy Storage
-* Encryption
-  * Client Side Encryption
-  * Server Side Encryption
-    * Server side encryption with Amazon S3 Managed Keys (SSE-S3)
-    * Server side encryption with KMS (SSE-KMS)
-    * Server side encryption with Customer Provided Keys (SSE-C)
+* S3, S3-IA, S3 - IA(One Zone), Glacier
 * Control access to buckets using either a bucket ACL or using Bucket Policies
-* **By default buckets are private and all objects stored inside them are private**
+
+### S3 Security and Encryption
+* By default buckets are private and all objects stored inside them are private, you can setup access control using:
+  * Bucket Policies
+  * Access Control Lists
+* Access Logs
+* Encryption
+  * Encryption is Transit
+    * SSL/TLS
+  * Encryption At Rest(Server Side) is achieved by
+    * S3 Managed Keys (SSE-S3)
+    * AWS Key Management Service, Managed Keys (SSE-KMS)
+    * Server side encryption with Customer Provided Keys (SSE-C)
+
 
 ### S3 - Versioning Exam Tips
 * Stores all versions of an object (including all writes and even if you delete an object)
@@ -83,22 +95,25 @@ AWS S3 Transfer Acceleration enables fast, easy, and secure transfers of files o
 * Integrates with Lifecycle rules
 * Versioning's MFA Delete capability, which uses multi-factor authentication, can be used to provide an additional layer of security
 
+### S3 - Lifecycle Management Lab
+* Automates moving your objects between the different storage tiers.
+* Can be used in conjunction with versioning
+* Can be applied to current versions and previous versions
+
 ### S3 - Cross Region Replication Exam Tips
 * Versioning must be enabled on both the source and destination buckets
 * Regions must be unique
-* Files in an existing bucket are not replicated automatically. All subsequent updated files will be replicated automatically
-* You cannot replicate to multiple buckets or use daisy chaining
-* Delete markers are replicated
-* Deleting individual versions or delete markers will not be replicated
-* Understand what Cross Region Replication is at a high level
+* Files in an existing bucket are not replicated automatically. 
+* All subsequent updated files will be replicated automatically
+* Delete markers are not replicated
+* Deleting individual versions or delete markers will not be replicated.
 
-### S3 - Lifecycle Management Lab
-* Can be used in conjunction with versioning
-* Can be applied to current versions and previous versions
-* Following actions can now be done:
-  * Transition to the Standard - Infrequent Access Storage Class (30 days after creation date)
-  * Archive to the Glacier Storage Class (30 days after IA)
-  * Permanently Delete
+
+### What is S3 Transfer Acceleration?
+AWS S3 Transfer Acceleration enables fast, easy, and secure transfers of files over long distances between your end users and an S3 bucket. Transfer Acceleration takes advantage of AWS CloudFront's globally distributed edge locations. As the data arrives at an edge location, data is routed to AWS S3 over an optimized network path.
+
+### What is CloudFront?
+Amazon CloudFront can be used to deliver your entire website, including dynamic, static, streaming, and interactive content using a global network of edge locations. Requests for your content are automatically routed to the nearest edge location, so content is delivered with the best possible performance.
 
 ### What is a CDN?
 A CDN (content delivery network) is a system of distributed servers (network) that delivers webpages and other web content to a user based on the geographic locations of the user, the origin of the webpage and a content delivery server.
@@ -108,8 +123,11 @@ A CDN (content delivery network) is a system of distributed servers (network) th
 * Origin - The origin of all the files that the CDN will distribute. This can be either an S3 Bucket, an EC2 Instance, and Elastic Load Balancer or Route 53
 * Distribution - The name given the CDN which consists of a collection of Edge Locations
 
-### What is CloudFront?
-Amazon CloudFront can be used to deliver your entire website, including dynamic, static, streaming, and interactive content using a global network of edge locations. Requests for your content are automatically routed to the nearest edge location, so content is delivered with the best possible performance.
+### CloudFont - Exam Tips
+* Understand the key terms: Edge Location, Origin, Distribution, Web Distribution, and RTMP
+* Edge locations are not just READ only, you can write to them too
+* Objects are cached for the life of the TTL (time to live)
+* You can clear cached objects but you will be charged
 
 Amazon CloudFront is optimized to work with other services such as S3, EC2, Elastic Load Balancing, and Route 53. CloudFront also works seamlessly with any non-AWS origin server, which stores the original, definitive versions of your files.
 
@@ -117,11 +135,7 @@ Amazon CloudFront is optimized to work with other services such as S3, EC2, Elas
 * Web Distribution - Typically used for websites
 * RTMP - Used for media streaming
 
-### CloudFont - Exam Tips
-* Understand the key terms: Edge Location, Origin, Distribution, Web Distribution, and RTMP
-* Edge locations are not just READ only, you can write to them too
-* Objects are cached for the life of the TTL (time to live)
-* You can clear cached objects but you will be charged
+
 
 ### Securing your buckets
 * By default, all newly created buckets are **private**
