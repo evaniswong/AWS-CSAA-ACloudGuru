@@ -96,7 +96,7 @@ Amazon EBS (Elastic Block Storage) allows you to create storage volumes and atta
 * You cannot block specific IP addresses using security groups, instead use Network Access Control Lists
 * You can specify allow rules but not deny rules
 
-### Volumes and Snapshots
+### Volumes and Snapshots (Exam Tips)
 * Volumes exist on EBS:
   * Virtual Hard Disk
 * Snapshots exist on S3
