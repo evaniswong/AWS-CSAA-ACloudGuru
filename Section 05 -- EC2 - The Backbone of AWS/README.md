@@ -103,7 +103,7 @@ Amazon EBS (Elastic Block Storage) allows you to create storage volumes and atta
 * Snapshots are point in time copies of volumes
 * Snapshots are incremental - this means that only the blocks that have changed since your last snapshot are moved to S3
 
-### Snapshots of Root Device Volumes
+### Snapshots of Root Device Volumes (Exam Tips)
 * To create a snapshot for EBS volumes that serve as root devices, you should stop the instance before taking the snapshot
 * However, you can take while the instance is running
 * You can create AMI's from EBS-backed instances and snapshots
