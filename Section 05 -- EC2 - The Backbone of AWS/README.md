@@ -115,7 +115,12 @@ Amazon EBS (Elastic Block Storage) allows you to create storage volumes and atta
 * Snapshots of encrypted volumes are encrypted automatically
 * Volumes restored from encrypted snapshots are encrypted automatically
 * You can share snapshots, but only if they are unencrypted
-  * These snapshots can be shared with other AWS accounts or made public
+* These snapshots can be shared with other AWS accounts or made public
+  * steps:
+    *Create a Snapshot of the unencrypted root device volume
+    *Create a copy of the Snapshot and select the encrypt option
+    *Create an AMI from the encrypted Snapshot
+    *Use that AMI to lauch new encrypted instances
 
 ### RAID, Volumes and Snapshots
 * RAID - Redundant Array of Independent Disks
