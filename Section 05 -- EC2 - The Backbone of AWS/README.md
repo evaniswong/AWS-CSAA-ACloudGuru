@@ -399,7 +399,7 @@ AMIs are regional. You can only launch an AMI from the region in which it is sto
 #### Exam Tips - EFS Lab
 * Supports the Network File System version 4 (NFSv4) protocol
 * You only pay for the storage you use (no pre-provisioning required)
-* Can scale up to the petabytes
+* Can scale up to the petabytes 
 * Can support thousands of concurrent NFS connections
 * Data is stored across multiple AZ's within a region
 * Read After Write Consistency
